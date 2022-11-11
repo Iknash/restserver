@@ -29,6 +29,8 @@ router.put('/:id',[
 ], usersPut );
 
 router.post('/',[
+    validateJWT,
+    isAdminRole,
     check('name', 'El nombre es obligatorio').not().isEmpty(),
     check('password', 'La contraseña debe ser mayor a 6 caracteres').isLength({ min: 6 }),
     check('email', 'El correo no es válido').isEmail(),

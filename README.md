@@ -1,3 +1,7 @@
-# WebServer + RestServer
+# REST Server
 
-Recuerden que deben de ejecutar ```npm install``` para reconstruir los módulos de Node.
+1. Install Node.js modules
+```npm install``` 
+
+2. Run REST Server
+```node app.js```

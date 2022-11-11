@@ -2,9 +2,9 @@ const { response } = require('express');
 
 const isAdminRole = ( req, res = response, next ) => {
 
-    const { role, name } = req.usuario;
+    const { role, name } = req.user;
 
-    if ( !req.usuario ){
+    if ( !req.user ){
         return res.status(500).json({
             msg: 'Se quiere verificar el rol salteándose la validación del token'
         });
@@ -22,13 +22,13 @@ const isAdminRole = ( req, res = response, next ) => {
 const hasRole = ( ...roles ) => {
     return (req, res = response, next) => {
 
-    if ( !req.usuario ){
+    if ( !req.user ){
         return res.status(500).json({
             msg: 'Se quiere verificar el rol salteándose la validación del token'
         });
     }
 
-    if ( !roles.includes( req.usuario.role ) ){
+    if ( !roles.includes( req.user.role ) ){
         return res.status(401).json({
             msg: `El servicio requiere uno de estos roles ${ roles }`
         });

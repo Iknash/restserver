@@ -9,44 +9,40 @@ class Server {
         this.app  = express();
         this.port = process.env.PORT;
 
-        this.authPath = '/api/auth';
-        this.usuariosPath = '/api/usuarios';
+        this.paths = {
+            auth: '/api/auth',
+            categories: '/api/categories',
+            users: '/api/users'
+        }
 
-        // Conectar a base de datos
-        this.conectarDB();
+        this.connectToDB();
 
-        // Middlewares
         this.middlewares();
 
-        // Rutas de mi aplicación
         this.routes();
     }
 
-    async conectarDB() {
+    async connectToDB() {
         await dbConnection();
     }
 
     middlewares() {
-
-        // CORS
         this.app.use( cors() );
 
-        // Lectura y parseo del body
         this.app.use( express.json() );
 
-        // Directorio Público
         this.app.use( express.static('public') );
-
     }
 
     routes() {
-        this.app.use( this.authPath, require('../routes/auth'));
-        this.app.use( this.usuariosPath, require('../routes/usuarios'));
+        this.app.use( this.paths.auth, require('../routes/auth'));
+        this.app.use( this.paths.categories, require('../routes/categories'));
+        this.app.use( this.paths.users, require('../routes/users'));
     }
 
     listen() {
         this.app.listen( this.port, () => {
-            console.log('Servidor corriendo en puerto', this.port );
+            console.log('Server running on port', this.port );
         });
     }
 
